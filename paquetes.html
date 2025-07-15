@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Paquetes Turísticos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+    }
+    th {
+      background-color: #2980b9;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Paquetes Turísticos</h1>
+  <table id="paquetes-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody id="paquetes-body">
+      <!-- Aquí van los datos -->
+    </tbody>
+  </table>
+
+  <script>
+    // Cambia esta URL por la de tu ngrok
+    const apiUrl = "https://xxxx.ngrok-free.app/paquetes";
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.getElementById("paquetes-body");
+        data.forEach(paquete => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${paquete.id}</td>
+            <td>${paquete.nombre}</td>
+            <td>${paquete.descripcion}</td>
+            <td>$${paquete.precio}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Error al cargar los datos:", error);
+        document.body.innerHTML += "<p style='color:red;'>Error al conectar con la API.</p>";
+      });
+  </script>
+</body>
+</html>
